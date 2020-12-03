@@ -10,8 +10,9 @@
         <div class="container-login">
             <p class="font-o font-size3">Login</p>
             <form id="formLogin" action="login.php" method="POST">
-            <input type="text" name="login" value="" placeholder="Login"><br>
-            <input type="password" name="password" value="" placeholder="Password">
+                <input type="text" name="login" value="" placeholder="Login"><br>
+                <input type="password" name="password" value="" placeholder="Password">
+                <input type="submit" name="btnLogin" value="Login">
             </form>
         </div>
     </div>

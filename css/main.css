@@ -19,10 +19,9 @@ html, body{
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #eee;
+    background-color: #fff;
     flex-direction: column;
-    background: #fff;
-    padding: 25px;
+    padding: 30px;
 }
 
 .container-login input{
@@ -32,4 +31,8 @@ html, body{
     padding: 4px 2px;
     border:0;
     border-bottom: 2px solid #f0f;
+}
+
+p.font-size3{
+    margin:15px 5px;
 }
