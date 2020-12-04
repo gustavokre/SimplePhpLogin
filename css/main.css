@@ -34,7 +34,7 @@ input.userLogin{
 }
 
 input[type=submit]{
-    width: 100%;;
+    width: 100%;
     padding: 10px 30px;
     background-color: rgb(0, 204, 255);
     border: 0;
