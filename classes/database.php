@@ -2,15 +2,21 @@
 
     class DatabaseConection{
 
+        const TABLENAME = "user";
         const INIFILE = 'database.ini';
         private $pdo;
         private $errors = [];
 
         public function __construct($cfg = false){
-            if(!$cfg){
-                $cfg = $this->loadIniConfig();
+            if($cfg){
+                $this->doConnection($cfg);
+                return;
             }
-            $this->doConnection($cfg);
+            if($cfg = $this->loadIniConfig()){
+                $this->doConnection($cfg);
+                 return;
+            }
+            throw new Exception("Nenhuma configuração de database válida!");
         }
 
         public function doConnection($cfg){
@@ -27,11 +33,13 @@
         }
 
         public function loadIniConfig(){
-            if(!file_exists(__DIR__ . "\\" . self::INIFILE)){
-                throw new Exception("Arquivo " . self::INIFILE . " não encontrado.");
+            $fullDir = $_SERVER['DOCUMENT_ROOT'] . "/cfg/" . self::INIFILE;
+            if(!file_exists($fullDir)){
+                throw new Exception("Arquivo " . $fullDir . " não encontrado.");
                 return false;
             }
-            return parse_ini_file(self::INIFILE);
+            if($cfg = parse_ini_file(realpath($fullDir))) return $cfg;
+            return false;
         }
 
         public function getErrors(){
@@ -41,7 +49,8 @@
         public function createTable(){
             //password_hash size 255 explained https://www.php.net/manual/en/function.password-hash.php
             //email size 254 https://web.archive.org/web/20120222213813/http://www.eph.co.uk/resources/email-address-length-faq/ and https://tools.ietf.org/html/rfc5321
-            $sql = "CREATE TABLE IF NOT EXISTS user(
+            $table = self::TABLENAME; 
+            $sql = "CREATE TABLE IF NOT EXISTS $table (
                 userID int PRIMARY KEY AUTO_INCREMENT NOT NULL,
                 userLogin varchar(:login) NOT NULL,
                 password_hash varchar(255) NOT NULL,
