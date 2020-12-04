@@ -1,6 +1,6 @@
 <?php
 
-class validate{
+class Validate{
 
 	//estes valores devem ser de acordo com o banco de dados (cuidado);
 	const INPUTMAXSIZE = [
@@ -21,7 +21,7 @@ class validate{
 		'password' => "/^.*$/i"
 	];
 
-	public static function general($input, $type){
+	public static function generic($input, $type){
 		if(!isset(self::rege[$type]) || !isset(self::INPUTMINSIZE[$type]) || !isset(self::INPUTMAXSIZE[$type])) return false;
 
 		$len = strlen($input);
