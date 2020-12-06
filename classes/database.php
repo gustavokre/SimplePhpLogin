@@ -16,7 +16,7 @@
                 $this->doConnection($cfg);
                  return;
             }
-            throw new Exception("Nenhuma configuração de database válida!");
+            throw new Exception(MultiLang::getText("DB_NO_VALID_CONFIG"));
         }
 
         public function doConnection($cfg){
@@ -35,7 +35,7 @@
         public function loadIniConfig(){
             $fullDir = $_SERVER['DOCUMENT_ROOT'] . "/cfg/" . self::INIFILE;
             if(!file_exists($fullDir)){
-                throw new Exception("Arquivo " . $fullDir . " não encontrado.");
+                throw new Exception(sprintf(MultiLang::getText("DB_FILE_NOT_FOUND"), $fullDir));
                 return false;
             }
             if($cfg = parse_ini_file(realpath($fullDir))) return $cfg;

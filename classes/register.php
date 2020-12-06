@@ -16,7 +16,7 @@
             else
             {
                 $this->valid = false;
-                array_push($this->errors, "Algum dos campos não foi preenchido corretamente.");
+                array_push($this->errors, MultiLang::getText("REGISTER_INVALID_INPUT"));
             }
             
         }
@@ -48,7 +48,7 @@
                 return false;
             }
             if($stmt->rowCount() > 0){
-                array_push($this->errors, "Usuário já registrado.");
+                array_push($this->errors, MultiLang::getText("REGISTER_USER_ALREADY_EXIST"));
                 return false;
             }
             return true;

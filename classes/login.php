@@ -15,7 +15,7 @@
             }
             else
             {
-                array_push($this->errors, "Usuário ou senha não forma preenchidos corretamente.");
+                array_push($this->errors, MultiLang::getText("LOGIN_INVALID_INPUT"));
             }
         }
 
@@ -49,12 +49,12 @@
                 }
 
                 $this->failedAttempts++;
-                array_push($this->errors, "Senha incorreta.");
+                array_push($this->errors, MultiLang::getText("LOGIN_WRONG_PASSWORD"));
                 return false;
             }
             
             $this->failedAttempts++;
-            array_push($this->errors, "Usuário não existe");
+            array_push($this->errors, MultiLang::getText("LOGIN_INVALID_USER"));
             return false;
         }
 
