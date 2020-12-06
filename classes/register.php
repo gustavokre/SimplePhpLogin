@@ -22,7 +22,7 @@
         }
 
         public function register(PDO $pdo){
-            if(!$this->valid || $this->isLoginAvailable($pdo)){
+            if(!$this->valid || !$this->isLoginAvailable($pdo)){
                 return false;
             }
             $table = DatabaseConection::TABLENAME;
