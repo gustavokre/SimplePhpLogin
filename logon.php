@@ -1,4 +1,5 @@
 <?php
+    require_once('classes/multilang.php');
     require_once('classes/database.php');
     require_once('classes/validate.php');
     require_once('classes/user.php');
