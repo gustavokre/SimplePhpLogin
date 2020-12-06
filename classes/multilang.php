@@ -3,7 +3,7 @@
         const LANGUAGE = "ENGLISH";
         const TEXT =
         [
-            ["PORTUGUESE"] =>
+            "PORTUGUESE" =>
             [
                 "DB_NO_VALID_CONFIG" => "Nenhuma configuração de database válida!",
                 "DB_FILE_NOT_FOUND" => "Arquivo %s não encontrado.",
@@ -13,7 +13,7 @@
                 "REGISTER_INVALID_INPUT" => "Algum dos campos não foram preenchidos corretamente.",
                 "REGISTER_USER_ALREADY_EXIST" => "Usuário já registrado."
             ],
-            ["ENGLISH"] =>
+            "ENGLISH" =>
             [
                 "DB_NO_VALID_CONFIG" => "No valid database configuration!",
                 "DB_FILE_NOT_FOUND" => "File %s not found.",
