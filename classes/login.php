@@ -8,7 +8,7 @@
         
         public function __construct($login, $password)
         {
-            if(Validate::generic($login, 'login')){
+            if(Validate::generic($login, 'login') && Validate::generic($password, 'password')){
                 $this->setLogin($login);
                 $this->password = $password;
                 $this->valid = true;
