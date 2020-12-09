@@ -14,7 +14,7 @@
                 "REGISTER_USER_ALREADY_EXIST" => "Usuário já registrado.",
                 "INDEX_LOGIN_BUTTON" => "Fazer Login",
                 "INDEX_LOGIN_HELP_FIELD" => "%s a %s Letras e números",
-                "INDEX_PASSWORD_HELP_FIELD" => "No minímo %s caracteres"
+                "INDEX_PASSWORD_HELP_FIELD" => "No mínimo %s caracteres"
             ],
             "ENGLISH" =>
             [
