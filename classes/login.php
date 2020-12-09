@@ -67,6 +67,8 @@
             $this->setFullName("");
             $this->setLogin("");
             $this->setPasswordHash("");
+            $this->valid = false;
+            $this->errors = [];
             $this->online = false;
         }
     }
