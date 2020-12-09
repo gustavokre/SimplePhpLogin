@@ -6,7 +6,7 @@ class Validate{
 	const INPUTMAXSIZE = [
 		'login' => 21,
 		'name' => 64,
-		'password' => 32
+		'password' => 64
 	];
 
 	const INPUTMINSIZE = [
