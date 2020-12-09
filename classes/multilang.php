@@ -11,7 +11,10 @@
                 "LOGIN_WRONG_PASSWORD" => "Senha incorreta.",
                 "LOGIN_INVALID_USER" => "Usuário não existe",
                 "REGISTER_INVALID_INPUT" => "Algum dos campos não foram preenchidos corretamente.",
-                "REGISTER_USER_ALREADY_EXIST" => "Usuário já registrado."
+                "REGISTER_USER_ALREADY_EXIST" => "Usuário já registrado.",
+                "INDEX_LOGIN_BUTTON" => "Fazer Login",
+                "INDEX_LOGIN_HELP_FIELD" => "%s a %s Letras e números",
+                "INDEX_PASSWORD_HELP_FIELD" => "No minímo %s caracteres"
             ],
             "ENGLISH" =>
             [
@@ -21,14 +24,16 @@
                 "LOGIN_WRONG_PASSWORD" => "Wrong password.",
                 "LOGIN_INVALID_USER" => "User does not exist",
                 "REGISTER_INVALID_INPUT" => "Some of the fields were not filled in correctly.",
-                "REGISTER_USER_ALREADY_EXIST" => "User already registered."
+                "REGISTER_USER_ALREADY_EXIST" => "User already registered.",
+                "INDEX_LOGIN_BUTTON" => "Sign in",
+                "INDEX_LOGIN_HELP_FIELD" => "%s to %s Letters and numbers",
+                "INDEX_PASSWORD_HELP_FIELD" => "At least %s characters"
             ]
         ];
 
         public static function getText($key){
             if(!isset(self::TEXT[self::LANGUAGE][$key])){
-                throw new Exception("[MultiLang] Invalid Text!");
-                return;
+                return "[MultiLang] Invalid Text!: '$key' ";
             }
             return self::TEXT[self::LANGUAGE][$key];
         }
