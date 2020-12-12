@@ -40,7 +40,7 @@
                 "LOGIN_TITLE" => "Log in",
                 "PASSWORD_HELP" => "Enter your password",
                 "REGISTER_PASSWORD_HELP" => "At least %s characters",
-                "REGISTER_LOGIN_HELP" => "%s to %s Letters, numbers, _",
+                "REGISTER_LOGIN_HELP" => "%s to %s Letters, numbers and _",
                 "REGISTER_INVALID_INPUT" => "Some of the fields were not filled in correctly.",
                 "REGISTER_USER_ALREADY_EXIST" => "User already registered.",
                 "REGISTER_TITLE" => "Sign up",
