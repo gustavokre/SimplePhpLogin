@@ -18,7 +18,10 @@
                 $this->valid = false;
                 array_push($this->errors, MultiLang::getText("REGISTER_INVALID_INPUT"));
             }
-            
+        }
+
+        public function getErrors(){
+            return $this->errors;
         }
 
         public function register(PDO $pdo){
@@ -26,7 +29,7 @@
                 return false;
             }
             $table = DatabaseConection::TABLENAME;
-            $stmt = $pdo->prepare("INSERT INTO $table (userLogin, password_hash, email, fullName) VALUES(:userLogin,:passwordHash,:email,:fullName)");
+            $stmt = $pdo->prepare("INSERT INTO $table (userLogin, password_hash, email, fullName, joinDate) VALUES(:userLogin,:passwordHash,:email,:fullName, CURRENT_DATE())");
 			$stmt->bindValue(':userLogin', $this->getLogin(), PDO::PARAM_STR);
             $stmt->bindValue(':passwordHash', $this->getPasswordHash(), PDO::PARAM_STR);
             $stmt->bindValue(':email', $this->getEmail(), PDO::PARAM_STR);
@@ -40,9 +43,8 @@
 
         public function isLoginAvailable(PDO $pdo){
             $table = DatabaseConection::TABLENAME;
-            $stmt = $pdo->prepare("SELECT userLogin FROM $table WHERE userLogin=:userLogin");
-			$stmt->bindValue(':userLogin', $this->getLogin(), PDO::PARAM_STR);
-            $stmt->bindValue(':passwordHash', $this->getPasswordHash(), PDO::PARAM_STR);
+            $stmt = $pdo->prepare("SELECT userLogin FROM $table WHERE userLogin=:uLogin");
+			$stmt->bindValue(':uLogin', $this->getLogin(), PDO::PARAM_STR);
             if(!$stmt->execute()) {
                 array_push($this->errors, $stmt->errorInfo());
                 return false;
