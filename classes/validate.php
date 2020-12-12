@@ -32,6 +32,7 @@ class Validate{
 		consequentemente sera retornado false (nao foi validado)
 		*/
 		preg_match(self::REGEX[$type], $input, $result);
+		if(!isset($result[0])) return false;
 		if($result[0] == $input){
 			return true;
 		}
