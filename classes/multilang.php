@@ -1,6 +1,6 @@
 <?php
     class MultiLang{
-        const LANGUAGE = "ENGLISH";
+        const LANGUAGE = "PORTUGUESE";
         const TEXT =
         [
             "PORTUGUESE" =>
@@ -9,12 +9,24 @@
                 "DB_FILE_NOT_FOUND" => "Arquivo %s não encontrado.",
                 "LOGIN_INVALID_INPUT" => "Usuário ou senha não forma preenchidos corretamente.",
                 "LOGIN_WRONG_PASSWORD" => "Senha incorreta.",
-                "LOGIN_INVALID_USER" => "Usuário não existe",
+                "LOGIN_INVALID_USER" => "Usuário não existe",        
+                "LOGIN_BUTTON" => "Fazer Login",
+                "LOGIN_HELP" => "Digite o nome do seu usuário",
+                "LOGIN_TITLE" => "Faça seu Login",
+                "PASSWORD_HELP" => "Digite sua senha",
+                "REGISTER_PASSWORD_HELP" => "No mínimo %s caracteres",
+                "REGISTER_LOGIN_HELP" => "%s a %s Letras e números",
                 "REGISTER_INVALID_INPUT" => "Algum dos campos não foram preenchidos corretamente.",
                 "REGISTER_USER_ALREADY_EXIST" => "Usuário já registrado.",
-                "INDEX_LOGIN_BUTTON" => "Fazer Login",
-                "INDEX_LOGIN_HELP_FIELD" => "%s a %s Letras e números",
-                "INDEX_PASSWORD_HELP_FIELD" => "No mínimo %s caracteres"
+                "REGISTER_TITLE" => "Registrar",
+                "REGISTER_HELP_EMAIL" => "Digite o seu endereço de e-mail",
+                "REGISTER_NAME_PLACEHOLDER" => "Nome completo",
+                "REGISTER_HELP_NAME" => "Digite o seu nome completo",
+                "REGISTER_BUTTON" => "Cadastrar",
+                "QUESTION_ALREADY_REGISTRED" => "Já é Cadastrado?",
+                "QUESTION_NOT_REGISTRED" => "Não é Cadastrado?",
+                "SUGGESTION_LOGIN" => "Login",
+                "SUGGESTION_REGISTER" => "Cadastrar"
             ],
             "ENGLISH" =>
             [
@@ -23,11 +35,23 @@
                 "LOGIN_INVALID_INPUT" => "Username or password was not filled in correctly.",
                 "LOGIN_WRONG_PASSWORD" => "Wrong password.",
                 "LOGIN_INVALID_USER" => "User does not exist",
+                "LOGIN_BUTTON" => "Sign in",
+                "LOGIN_HELP" => "Enter your username",
+                "LOGIN_TITLE" => "Log in",
+                "PASSWORD_HELP" => "Enter your password",
+                "REGISTER_PASSWORD_HELP" => "At least %s characters",
+                "REGISTER_LOGIN_HELP" => "%s to %s Letters and numbers",
                 "REGISTER_INVALID_INPUT" => "Some of the fields were not filled in correctly.",
                 "REGISTER_USER_ALREADY_EXIST" => "User already registered.",
-                "INDEX_LOGIN_BUTTON" => "Sign in",
-                "INDEX_LOGIN_HELP_FIELD" => "%s to %s Letters and numbers",
-                "INDEX_PASSWORD_HELP_FIELD" => "At least %s characters"
+                "REGISTER_TITLE" => "Sign up",
+                "REGISTER_HELP_EMAIL" => "Enter your e-mail address",
+                "REGISTER_NAME_PLACEHOLDER" => "Full name",
+                "REGISTER_HELP_NAME" => "Enter your full name",
+                "REGISTER_BUTTON" => "Register",
+                "QUESTION_ALREADY_REGISTRED" => "Already Registred?",
+                "QUESTION_NOT_REGISTRED" => "Not Registred?",
+                "SUGGESTION_LOGIN" => "Login",
+                "SUGGESTION_REGISTER" => "Create an Account"
             ]
         ];
 
