@@ -9,14 +9,21 @@
 
         public function __construct($cfg = false){
             if($cfg){
-                $this->doConnection($cfg);
+                $this->startDB($cfg);
                 return;
             }
             if($cfg = $this->loadIniConfig()){
-                $this->doConnection($cfg);
+                $this->startDB($cfg);
                  return;
             }
             throw new Exception(MultiLang::getText("DB_NO_VALID_CONFIG"));
+        }
+
+        public function startDB($cfg){
+            $this->doConnection($cfg);
+            if($cfg['createTable'] == 1){
+                $this->createTable();
+            }
         }
 
         public function doConnection($cfg){
@@ -55,7 +62,8 @@
                 userLogin varchar(:login) NOT NULL,
                 password_hash varchar(255) NOT NULL,
                 email varchar(254) NOT NULL,
-                fullName varchar(:name) NOT NULL
+                fullName varchar(:name) NOT NULL,
+                joinDate DATE NOT NULL
                 );";
             $stmt = $this->pdo->prepare($sql);
             //you can change these values but caution with validate.php class
