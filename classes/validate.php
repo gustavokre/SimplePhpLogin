@@ -16,7 +16,7 @@ class Validate{
 	];
 
 	const REGEX = [
-		'login' => "/^([a-zA-Z0-9]+[_ ]?)+$/",
+		'login' => "/^([a-zA-Z0-9]+[_]?)+$/",
 		'name' => "/^[a-záàâãéèêíïóôõöúçñ ]+$/i",
 		'password' => "/^.*$/i"
 	];
