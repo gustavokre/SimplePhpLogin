@@ -9,6 +9,10 @@
     font-family: Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.font-bold{
+    font-weight: bold;
+}
+
 .font-size1{
     font-size: 0.9em;
 }
@@ -31,4 +35,8 @@
 
 .font-cor2{
     color: #333;
+}
+
+.font-cor3{
+    color:rgb(201, 14, 176);
 }
