@@ -15,7 +15,7 @@ html, body{
     width: 100vw;
 }
 
-.container-login{
+.container-user{
     display: flex;
     align-items: stretch;
     justify-content: center;
@@ -55,6 +55,10 @@ input[type=submit]:hover{
     opacity: 0;
 }
 
+.display-none{
+    display: none;
+}
+
 .helpField{
     transition: 0.5s;
     color:#06afd9;
@@ -65,11 +69,20 @@ p.font-size3{
     margin:5px 0px 15px 0px;
 }
 
-#formLogin{
+#formLogin, #formRegister{
     display: flex;
     flex-direction: column;
 }
 
 .text-center{
     text-align: center;
+}
+
+#register-switch, #login-switch{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.margin-top-15{
+    margin-top: 15px;
 }
