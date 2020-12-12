@@ -15,23 +15,23 @@ class Validate{
 		'password' => 6
 	];
 
-	const rege = [
+	const REGEX = [
 		'login' => "/^([a-zA-Z0-9]+[_ ]?)+$/",
 		'name' => "/^[a-záàâãéèêíïóôõöúçñ ]+$/i",
 		'password' => "/^.*$/i"
 	];
 
 	public static function generic($input, $type){
-		if(!isset(self::rege[$type]) || !isset(self::INPUTMINSIZE[$type]) || !isset(self::INPUTMAXSIZE[$type])) return false;
+		if(!isset(self::REGEX[$type]) || !isset(self::INPUTMINSIZE[$type]) || !isset(self::INPUTMAXSIZE[$type])) return false;
 
 		$len = strlen($input);
 		if($len < self::INPUTMINSIZE[$type] || $len > self::INPUTMAXSIZE[$type]) return false;
 		/*
-		Aplica o regex no input, se o resultado for diferente do input
+		Aplica o REGEXx no input, se o resultado for diferente do input
 		quer dizer que existe algum caractere nao permitido dentro do proprio input
 		consequentemente sera retornado false (nao foi validado)
 		*/
-		preg_match(self::rege[$type], $input, $result);
+		preg_match(self::REGEX[$type], $input, $result);
 		if($result[0] == $input){
 			return true;
 		}
