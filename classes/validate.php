@@ -6,7 +6,7 @@ class Validate{
 	const INPUTMAXSIZE = [
 		'login' => 21,
 		'name' => 64,
-		'password' => 64
+		'password' => 128
 	];
 
 	const INPUTMINSIZE = [
@@ -16,7 +16,7 @@ class Validate{
 	];
 
 	const rege = [
-		'login' => "/^[a-zA-Z0-9]+$/",
+		'login' => "/^([a-zA-Z0-9]+[_ ]?)+$/",
 		'name' => "/^[a-záàâãéèêíïóôõöúçñ ]+$/i",
 		'password' => "/^.*$/i"
 	];
