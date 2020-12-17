@@ -1,52 +1,66 @@
 <?php
 
     abstract class User{
+        protected $errors = [];
         private $login;
         private $passwordHash;
         private $firstName;
         private $fullName;
         private $email;
 
-        public function getPasswordHash(){
+        public function get_errors(){
+            return $this->errors;
+        }
+
+        public function get_password_hash(){
             return $this->passwordHash;
         }
 
-        public function getLogin(){
+        public function get_login(){
             return $this->login;
         }
 
-        public function getFullName(){
+        public function get_full_name(){
             return $this->fullName;
         }
 
-        public function getEmail(){
+        public function get_email(){
             return $this->email;
         }
 
-        public function getFirstName(){
+        public function get_first_name(){
             return $this->firstName;
         }
 
-        public function setFirstName($firstName){
+        public function set_first_name($firstName){
             $this->firstName = $firstName;
         }
-        public function setFullName($fullName){
+        public function set_full_name($fullName){
             $this->fullName = $fullName;
         }
-        public function setEmail($email){
+        public function set_email($email){
             $this->email = $email;
         }
 
-        public function setLogin($login){
+        public function set_login($login){
             $this->login = $login;
         }
 
-        public function setPasswordHash($hash){
+        public function set_password_hash($hash){
             $this->passwordHash = $hash;
         }
 
-        public function generatePasswordHash($password){
+        public function generate_password_hash($password){
             return password_hash($password, PASSWORD_BCRYPT); 
+        }
+
+        public function unset_all(){
+            $this->errors = [];
+            $this->login = "";
+            $this->passwordHash = "";
+            $this->firstName = "";
+            $this->fullName = "";
+            $this->email = "";
         }
     }
 

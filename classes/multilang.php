@@ -55,7 +55,7 @@
             ]
         ];
 
-        public static function getText($key){
+        public static function get_text($key){
             if(!isset(self::TEXT[self::LANGUAGE][$key])){
                 return "[MultiLang] Invalid Text!: '$key' ";
             }

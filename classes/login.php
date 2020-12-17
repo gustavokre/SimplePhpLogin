@@ -1,29 +1,23 @@
 <?php
     class Login extends User{
-        private $errors = [];
         private $online = false;
         private $valid = false;
-        private $failedAttempts;
         private $password;
         
         public function __construct($login, $password)
         {
             if(Validate::generic($login, 'login') && Validate::generic($password, 'password')){
-                $this->setLogin($login);
+                $this->set_login($login);
                 $this->password = $password;
                 $this->valid = true;
             }
             else
             {
-                array_push($this->errors, MultiLang::getText("LOGIN_INVALID_INPUT"));
+                array_push($this->errors, MultiLang::get_text("LOGIN_INVALID_INPUT"));
             }
         }
 
-        public function getErrors(){
-            return $this->errors;
-        }
-
-        public function getIsOnline(){
+        public function get_is_onlinene(){
             return $this->online;
         }
 
@@ -31,9 +25,9 @@
             if(!$this->valid){
                 return false;
             }
-            $table = DatabaseConection::TABLENAME;
+            $table = Database_connection::TABLENAME;
             $stmt = $pdo->prepare("SELECT * FROM $table WHERE userLogin=:userLogin");
-            $stmt->bindValue(':userLogin', $this->getLogin(), PDO::PARAM_STR);
+            $stmt->bindValue(':userLogin', $this->get_login(), PDO::PARAM_STR);
             
             if(!$stmt->execute()) {
                 array_push($this->errors, $stmt->errorInfo());
@@ -42,19 +36,16 @@
 
             while($user = $stmt->fetch(PDO::FETCH_ASSOC)){
                 if($this->verifyPassword($this->password, $user['password_hash'])){
-                    $this->setEmail($user['email']);
-                    $this->setFullName($user['fullName']);
+                    $this->set_email($user['email']);
+                    $this->set_full_name($user['fullName']);
                     $this->online = true;
+                    Session_manager::save_login($this);
                     return true;
                 }
-
-                $this->failedAttempts++;
-                array_push($this->errors, MultiLang::getText("LOGIN_WRONG_PASSWORD"));
+                array_push($this->errors, MultiLang::get_text("LOGIN_WRONG_PASSWORD"));
                 return false;
             }
-            
-            $this->failedAttempts++;
-            array_push($this->errors, MultiLang::getText("LOGIN_INVALID_USER"));
+            array_push($this->errors, MultiLang::get_text("LOGIN_INVALID_USER"));
             return false;
         }
 
@@ -62,14 +53,11 @@
             return password_verify($password, $dbPassword);
         }
 
-        public function goOffline(){
-            $this->setEmail("");
-            $this->setFullName("");
-            $this->setLogin("");
-            $this->setPasswordHash("");
+        public function go_offlinee(){
+            $this->unset_all();
             $this->valid = false;
-            $this->errors = [];
             $this->online = false;
+            Session_manager::go_offline();
         }
     }
 ?>

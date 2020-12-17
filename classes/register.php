@@ -1,39 +1,34 @@
 <?php
 
     class Register extends User{
-        private $errors = [];
         private $valid;
 
         public function __construct($login, $password, $email, $name)
         {
             if(Validate::generic($login, 'login') && Validate::generic($password, 'password') && Validate::email($email) && Validate::generic($name, 'name')){
-                $this->setLogin($login);
-                $this->setPasswordHash($this->generatePasswordHash($password));
-                $this->setEmail($email);
-                $this->setFullName($name);
+                $this->set_login($login);
+                $this->set_password_hash($this->generate_password_hash($password));
+                $this->set_email($email);
+                $this->set_full_name($name);
                 $this->valid = true;
             }
             else
             {
                 $this->valid = false;
-                array_push($this->errors, MultiLang::getText("REGISTER_INVALID_INPUT"));
+                array_push($this->errors, MultiLang::get_text("REGISTER_INVALID_INPUT"));
             }
-        }
-
-        public function getErrors(){
-            return $this->errors;
         }
 
         public function register(PDO $pdo){
-            if(!$this->valid || !$this->isLoginAvailable($pdo)){
+            if(!$this->valid || !$this->is_login_available($pdo)){
                 return false;
             }
-            $table = DatabaseConection::TABLENAME;
+            $table = Database_connection::TABLENAME;
             $stmt = $pdo->prepare("INSERT INTO $table (userLogin, password_hash, email, fullName, joinDate) VALUES(:userLogin,:passwordHash,:email,:fullName, CURRENT_DATE())");
-			$stmt->bindValue(':userLogin', $this->getLogin(), PDO::PARAM_STR);
-            $stmt->bindValue(':passwordHash', $this->getPasswordHash(), PDO::PARAM_STR);
-            $stmt->bindValue(':email', $this->getEmail(), PDO::PARAM_STR);
-            $stmt->bindValue(':fullName', $this->getFullName(), PDO::PARAM_STR);
+			$stmt->bindValue(':userLogin', $this->get_login(), PDO::PARAM_STR);
+            $stmt->bindValue(':passwordHash', $this->get_password_hash(), PDO::PARAM_STR);
+            $stmt->bindValue(':email', $this->get_email(), PDO::PARAM_STR);
+            $stmt->bindValue(':fullName', $this->get_full_name(), PDO::PARAM_STR);
             if(!$stmt->execute()) {
                 array_push($this->errors, $stmt->errorInfo());
                 return false;
@@ -41,16 +36,16 @@
             return true;
         }
 
-        public function isLoginAvailable(PDO $pdo){
-            $table = DatabaseConection::TABLENAME;
+        public function is_login_available(PDO $pdo){
+            $table = Database_connection::TABLENAME;
             $stmt = $pdo->prepare("SELECT userLogin FROM $table WHERE userLogin=:uLogin");
-			$stmt->bindValue(':uLogin', $this->getLogin(), PDO::PARAM_STR);
+			$stmt->bindValue(':uLogin', $this->get_login(), PDO::PARAM_STR);
             if(!$stmt->execute()) {
                 array_push($this->errors, $stmt->errorInfo());
                 return false;
             }
             if($stmt->rowCount() > 0){
-                array_push($this->errors, MultiLang::getText("REGISTER_USER_ALREADY_EXIST"));
+                array_push($this->errors, MultiLang::get_text("REGISTER_USER_ALREADY_EXIST"));
                 return false;
             }
             return true;

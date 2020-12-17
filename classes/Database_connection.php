@@ -1,6 +1,6 @@
 <?php
 
-    class DatabaseConection{
+    class Database_connection{
 
         const TABLENAME = "user";
         const INIFILE = 'database.ini';
@@ -9,24 +9,24 @@
 
         public function __construct($cfg = false){
             if($cfg){
-                $this->startDB($cfg);
+                $this->start_db($cfg);
                 return;
             }
-            if($cfg = $this->loadIniConfig()){
-                $this->startDB($cfg);
+            if($cfg = $this->load_ini_config()){
+                $this->start_db($cfg);
                  return;
             }
-            throw new Exception(MultiLang::getText("DB_NO_VALID_CONFIG"));
+            throw new Exception(MultiLang::get_text("DB_NO_VALID_CONFIG"));
         }
 
-        public function startDB($cfg){
-            $this->doConnection($cfg);
+        public function start_db($cfg){
+            $this->do_connection($cfg);
             if($cfg['createTable'] == 1){
-                $this->createTable();
+                $this->create_table();
             }
         }
 
-        public function doConnection($cfg){
+        public function do_connection($cfg){
             $dsn = "mysql:host=". $cfg['host'] .";dbname=". $cfg['dbname'] .";charset=utf8;";
             try{
                 $this->pdo = new PDO($dsn, $cfg['user'], $cfg['password']);
@@ -35,25 +35,25 @@
             }
         }
 
-        public function getConnection(){
+        public function get_connection(){
             return $this->pdo;
         }
 
-        public function loadIniConfig(){
+        public function load_ini_config(){
             $fullDir = $_SERVER['DOCUMENT_ROOT'] . "/cfg/" . self::INIFILE;
             if(!file_exists($fullDir)){
-                throw new Exception(sprintf(MultiLang::getText("DB_FILE_NOT_FOUND"), $fullDir));
+                throw new Exception(sprintf(MultiLang::get_text("DB_FILE_NOT_FOUND"), $fullDir));
                 return false;
             }
             if($cfg = parse_ini_file(realpath($fullDir))) return $cfg;
             return false;
         }
 
-        public function getErrors(){
+        public function get_errors(){
             return $this->errors;
         }
 
-        public function createTable(){
+        public function create_table(){
             //password_hash size 255 explained https://www.php.net/manual/en/function.password-hash.php
             //email size 254 https://web.archive.org/web/20120222213813/http://www.eph.co.uk/resources/email-address-length-faq/ and https://tools.ietf.org/html/rfc5321
             $table = self::TABLENAME; 
