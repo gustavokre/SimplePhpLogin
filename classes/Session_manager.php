@@ -7,7 +7,7 @@ class Session_manager{
 	*/
 
 	//expirar em quantos minutos a sessao
-	const EXPIRAR = 5;
+	const EXPIRAR = 1;
 
 	const SALT = "1992";
 	const MAX_ATTEMPTS = 6;
@@ -16,28 +16,29 @@ class Session_manager{
 
 	public static function start(){
 		session_start();
-		//with this line every time the user's load a page 
 		setcookie(session_name(),session_id(), time() + (self::EXPIRAR*60));
-		self::check_expired();
+		if(self::is_expired() && self::is_valid_session()){
+			self::regenerate();
+		}
 	}
 
 	public static function get_is_online(){
-		if(isset($_SESSION['ONLINE']) && $_SESSION['ONLINE'] === true && self::is_valid_session_id()){
+		if(isset($_SESSION['ONLINE']) && $_SESSION['ONLINE'] === true && self::is_valid_session()){
 			return true;
 		}
 		return false;
 	}
 
-	private static function register_new_id(){
-		$_SESSION['ID'] = self::generate_id();
+	private static function register_hash(){
+		$_SESSION['HASH'] = self::generate_hash();
     }
     
-    private static function generate_id(){
+    private static function generate_hash(){
         return md5(self::SALT . $_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
     }
 
 	public static function save_login(login $user){
-		self::register_new_id(self::generate_id());
+		self::register_hash(self::generate_hash());
 		$_SESSION['ONLINE'] = true;
 		$_SESSION['FULLNAME'] = $user->get_full_name();
 		$_SESSION['EMAIL'] = $user->get_email();
@@ -51,16 +52,17 @@ class Session_manager{
 	}
 
 	public static function regenerate(){
+		$_SESSION['DESTROYED'] = TRUE;
 		session_regenerate_id();
+		unset($_SESSION['DESTROYED']);
 		$_SESSION['EXPIRES'] = time() + (self::EXPIRAR*60);
 	}
 
 	/**
-	* regenerate session id if expired
+	* regenerate session id if expired and user is online
 	 */
-	public static function check_expired(){
+	public static function is_expired(){
 		if(isset($_SESSION['EXPIRES']) && $_SESSION['EXPIRES'] < time()){
-			self::regenerate();
 			return true;
 		}
 		return false;
@@ -72,12 +74,12 @@ class Session_manager{
 		session_write_close();
 	}
 
-	public static function is_valid_session_id(){
-		if(!isset($_SESSION['ID'])){
+	public static function is_valid_session(){
+		if(!isset($_SESSION['HASH']) || isset($_SESSION['DESTROYED'])){
 			return false;
 		}
-		$currentID = self::generate_id();
-		if($currentID === $_SESSION['ID']){
+		$currentID = self::generate_hash();
+		if($currentID === $_SESSION['HASH']){
 			return true;
 		}
 		return false;
