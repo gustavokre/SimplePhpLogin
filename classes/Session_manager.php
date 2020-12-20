@@ -34,9 +34,9 @@ class Session_manager{
 		$_SESSION['HASH'] = self::generate_hash();
     }
     
-    private static function generate_hash(){
-        return md5(self::SALT . $_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
-    }
+	private static function generate_hash(){
+		return md5(self::SALT . $_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
+	}
 
 	public static function save_login(login $user){
 		self::register_new_hash();
