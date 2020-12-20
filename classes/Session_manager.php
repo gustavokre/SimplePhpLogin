@@ -1,13 +1,11 @@
 <?php
 
 class Session_manager{
-	/*
-	importante usar no php.ini
-	session.cookie_httponly 1
-	*/
 
-	//expirar em quantos minutos a sessao
-	const EXPIRAR = 1;
+	//COOKIE_USER_LIFE life time in minutes
+	const COOKIE_USER_LIFE = 60;
+	//Session life time in minutes (after this time the session will be regenerated)
+	const SESSION_LIFE = 15;
 
 	const SALT = "1992";
 	const MAX_ATTEMPTS = 6;
@@ -15,8 +13,11 @@ class Session_manager{
 	const ATTEMPTS_SAFE_INTERVAL = 3;
 
 	public static function start(){
+		//for security reasons
+		ini_set('session.cookie_httponly', 1);
+
 		session_start();
-		setcookie(session_name(),session_id(), time() + (self::EXPIRAR*60));
+		setcookie(session_name(),session_id(), time() + (self::COOKIE_USER_LIFE*60));
 		if(self::is_expired() && self::is_valid_session()){
 			self::regenerate();
 		}
@@ -29,7 +30,7 @@ class Session_manager{
 		return false;
 	}
 
-	private static function register_hash(){
+	private static function register_new_hash(){
 		$_SESSION['HASH'] = self::generate_hash();
     }
     
@@ -38,13 +39,13 @@ class Session_manager{
     }
 
 	public static function save_login(login $user){
-		self::register_hash(self::generate_hash());
+		self::register_new_hash();
 		$_SESSION['ONLINE'] = true;
 		$_SESSION['FULLNAME'] = $user->get_full_name();
 		$_SESSION['EMAIL'] = $user->get_email();
 		$_SESSION['USER'] = $user->get_login();
 		$_SESSION['LOGIN_TIME'] = time();
-		$_SESSION['EXPIRES'] = time() + (self::EXPIRAR*60);
+		$_SESSION['EXPIRES'] = time() + (self::SESSION_LIFE*60);
 		/*i think is important dont change the $_SESSION['ATTEMPTS'] value, for example:
 		if i set to 0, it is possible to user brute force login and when is one attempt left
 		he do a login into a valid account and the attempts will be set to zero and he can try brute force again
@@ -55,7 +56,7 @@ class Session_manager{
 		$_SESSION['DESTROYED'] = TRUE;
 		session_regenerate_id();
 		unset($_SESSION['DESTROYED']);
-		$_SESSION['EXPIRES'] = time() + (self::EXPIRAR*60);
+		$_SESSION['EXPIRES'] = time() + (self::SESSION_LIFE*60);
 	}
 
 	/**
