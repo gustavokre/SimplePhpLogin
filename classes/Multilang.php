@@ -1,6 +1,6 @@
 <?php
     class MultiLang{
-        const LANGUAGE = "PORTUGUESE";
+        const LANGUAGE = "ENGLISH";
         const TEXT =
         [
             "PORTUGUESE" =>
@@ -26,7 +26,10 @@
                 "QUESTION_ALREADY_REGISTRED" => "Já é Cadastrado?",
                 "QUESTION_NOT_REGISTRED" => "Não é Cadastrado?",
                 "SUGGESTION_LOGIN" => "Login",
-                "SUGGESTION_REGISTER" => "Cadastrar"
+                "SUGGESTION_REGISTER" => "Cadastrar",
+                "SHOW_USER_NAME" => "Usuário",
+                "SHOW_FULL_NAME" => "Nome",
+                "SHOW_EMAIL" => "Email"
             ],
             "ENGLISH" =>
             [
@@ -51,7 +54,10 @@
                 "QUESTION_ALREADY_REGISTRED" => "Already Registred?",
                 "QUESTION_NOT_REGISTRED" => "Not Registred?",
                 "SUGGESTION_LOGIN" => "Login",
-                "SUGGESTION_REGISTER" => "Create an Account"
+                "SUGGESTION_REGISTER" => "Create an Account",
+                "SHOW_USER_NAME" => "User",
+                "SHOW_FULL_NAME" => "Name",
+                "SHOW_EMAIL" => "Email"
             ]
         ];
 
