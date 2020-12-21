@@ -20,9 +20,8 @@
 <html>
 <head>
     <title>Login Screen</title>
-<?php include "head.php";?>
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/fontes.css">
+<?php include "head.php";?>
 </head>
 <body>
     <div class="container">
