@@ -30,7 +30,7 @@
             <!-- Login Container -->
             <div class="container-user" id="c-login">
                 <p class="font-o font-size3 text-center"><?php                                          echo MultiLang::get_text("LOGIN_TITLE");?></p>
-                <form id="formLogin" action="logon.php" method="POST">
+                <form id="formLogin" action="account/logon.php" method="POST">
                     <input class="userLogin" type="text" name="login" value="" placeholder="Login"><br>
                     <div class="helpField font-t font-size1 invisible"><?php                            echo MultiLang::get_text("LOGIN_HELP")?></div>
                     <input class="userLogin" type="password" name="password" value="" placeholder="Password"><br>
@@ -43,7 +43,7 @@
             <!-- Register Container (this container starts invisible but the user can switch between this and login container)-->
             <div class="container-user display-none" id="c-register">
                 <p class="font-o font-size3 text-center"><?php                                          echo MultiLang::get_text("REGISTER_TITLE");?></p>
-                <form id="formRegister" action="signup.php" method="POST">
+                <form id="formRegister" action="account/signup.php" method="POST">
                     <input class="userLogin" type="text" name="login" value="" placeholder="Login"><br>
                     <div class="helpField font-t font-size1 invisible"><?php                            echo $mLangText["login_help"];?></div>
                     <input class="userLogin" type="password" name="password" value="" placeholder="Password"><br>
@@ -61,5 +61,8 @@
     </div>
     <script src="js/helpField.js"></script>
     <script src="js/containerSwitch.js"></script>
+    <?php if(isset($_GET["error"])){
+        echo "<script type='text/javascript'>alert(\"". trim($_SESSION["ERRORS"]) ."\");</script>";
+     } ?>
 </body>
 </html>
