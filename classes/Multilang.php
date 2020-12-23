@@ -29,7 +29,8 @@
                 "SUGGESTION_REGISTER" => "Cadastrar",
                 "SHOW_USER_NAME" => "Usuário",
                 "SHOW_FULL_NAME" => "Nome",
-                "SHOW_EMAIL" => "Email"
+                "SHOW_EMAIL" => "Email",
+                "LOGOUT_BUTTON" => "Sair"
             ],
             "ENGLISH" =>
             [
@@ -57,7 +58,8 @@
                 "SUGGESTION_REGISTER" => "Create an Account",
                 "SHOW_USER_NAME" => "User",
                 "SHOW_FULL_NAME" => "Name",
-                "SHOW_EMAIL" => "Email"
+                "SHOW_EMAIL" => "Email",
+                "LOGOUT_BUTTON" => "Logout"
             ]
         ];
 
