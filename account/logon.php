@@ -1,10 +1,10 @@
 <?php
-    require_once('classes/Session_manager.php');
-    require_once('classes/Multilang.php');
-    require_once('classes/Database_connection.php');
-    require_once('classes/Validate.php');
-    require_once('classes/User.php');
-    require_once('classes/Login.php');
+    require_once('../classes/Session_manager.php');
+    require_once('../classes/Multilang.php');
+    require_once('../classes/Database_connection.php');
+    require_once('../classes/Validate.php');
+    require_once('../classes/User.php');
+    require_once('../classes/Login.php');
     
     $dbConnection = new Database_connection();
     Session_manager::start();
@@ -26,6 +26,8 @@
             echo "<pre>" . var_dump($userPP->get_errors()) . "</pre><br>";
             echo "Login failed<br>";
             echo "<a href=\"/\">Back</a>";
+            $_SESSION["ERRORS"] = $userPP->get_errors()[0];
+            header("Location:../index.php?error=true");
         }
     }
 ?>
