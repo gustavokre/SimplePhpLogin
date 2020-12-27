@@ -1,7 +1,7 @@
 <div class="user-bar">
     <?php
     use gustavokre\classes\MultiLang;
-    const SESSION_DEBUG = false;
+    const SESSION_DEBUG = true;
     if($userRR->go_online()){
         echo "<p style='color:#3a3;'>ONLINE!</p>";
         echo "<span>" . MultiLang::get_text("SHOW_USER_NAME") . ": <b>" . $userRR->get_login() . "</b></span><br>";
@@ -14,7 +14,7 @@
         echo "<p style='color:#a33;'>OFFLINE!</p>";
     }
     if(SESSION_DEBUG){
-        echo "SESSION:";
+        echo "<br>SESSION:";
         echo session_id() . "<br>";
         foreach($_SESSION as $key => $val){
             echo "<span>$key : <b>$val</b></span><br>";

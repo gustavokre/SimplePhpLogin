@@ -17,6 +17,7 @@
             echo "Name:" . $userPP->get_full_name() . "<br>";
             echo "Login:" . $userPP->get_login() . "<br>";
             echo "Email:" . $userPP->get_email() . "<br>";
+            echo "Join Date:" . $userPP->get_join_date() . "<br>";
             echo "<a href=\"../\">Back</a>";
         }
         else

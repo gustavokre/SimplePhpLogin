@@ -40,6 +40,7 @@
                 if($this->verifyPassword($this->password, $user['password_hash'])){
                     $this->set_email($user['email']);
                     $this->set_full_name($user['fullName']);
+                    $this->set_join_date($user['joinDate']);
                     $this->online = true;
                     Session_manager::save_login($this);
                     return true;

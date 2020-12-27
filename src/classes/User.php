@@ -8,6 +8,7 @@
         private $firstName;
         private $fullName;
         private $email;
+        private $joinDate;
 
         public function get_errors(){
             return $this->errors;
@@ -33,6 +34,10 @@
             return $this->firstName;
         }
 
+        public function get_join_date(){
+            return $this->joinDate;
+        }
+
         public function set_first_name($firstName){
             $this->firstName = $firstName;
         }
@@ -45,6 +50,10 @@
 
         public function set_login($login){
             $this->login = $login;
+        }
+
+        public function set_join_date($date){
+            $this->joinDate = $date;
         }
 
         public function set_password_hash($hash){
