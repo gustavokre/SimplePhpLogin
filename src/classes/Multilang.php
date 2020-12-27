@@ -1,4 +1,6 @@
 <?php
+    namespace gustavokre\classes;
+
     class MultiLang{
         const LANGUAGE = "ENGLISH";
         const TEXT =

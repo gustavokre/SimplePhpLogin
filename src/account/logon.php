@@ -1,10 +1,11 @@
 <?php
-    require_once('../classes/Session_manager.php');
-    require_once('../classes/Multilang.php');
-    require_once('../classes/Database_connection.php');
-    require_once('../classes/Validate.php');
-    require_once('../classes/User.php');
-    require_once('../classes/Login.php');
+    require_once('../../vendor/autoload.php');
+    use gustavokre\classes\Session_manager;
+    use gustavokre\classes\MultiLang;
+    use gustavokre\classes\Database_connection;
+    use gustavokre\classes\Validate;
+    use gustavokre\classes\User;
+    use gustavokre\classes\Login;
     
     $dbConnection = new Database_connection();
     Session_manager::start();
@@ -16,7 +17,7 @@
             echo "Name:" . $userPP->get_full_name() . "<br>";
             echo "Login:" . $userPP->get_login() . "<br>";
             echo "Email:" . $userPP->get_email() . "<br>";
-            echo "<a href=\"/\">Back</a>";
+            echo "<a href=\"../\">Back</a>";
         }
         else
         {

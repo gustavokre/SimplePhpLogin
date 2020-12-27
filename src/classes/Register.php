@@ -1,4 +1,5 @@
 <?php
+    namespace gustavokre\classes;
 
     class Register extends User{
         private $valid;
@@ -19,16 +20,16 @@
             }
         }
 
-        public function register(PDO $pdo){
+        public function register(\PDO $pdo){
             if(!$this->valid || !$this->is_login_available($pdo)){
                 return false;
             }
             $table = Database_connection::TABLENAME;
             $stmt = $pdo->prepare("INSERT INTO $table (userLogin, password_hash, email, fullName, joinDate) VALUES(:userLogin,:passwordHash,:email,:fullName, CURRENT_DATE())");
-			$stmt->bindValue(':userLogin', $this->get_login(), PDO::PARAM_STR);
-            $stmt->bindValue(':passwordHash', $this->get_password_hash(), PDO::PARAM_STR);
-            $stmt->bindValue(':email', $this->get_email(), PDO::PARAM_STR);
-            $stmt->bindValue(':fullName', $this->get_full_name(), PDO::PARAM_STR);
+			$stmt->bindValue(':userLogin', $this->get_login(), \PDO::PARAM_STR);
+            $stmt->bindValue(':passwordHash', $this->get_password_hash(), \PDO::PARAM_STR);
+            $stmt->bindValue(':email', $this->get_email(), \PDO::PARAM_STR);
+            $stmt->bindValue(':fullName', $this->get_full_name(), \PDO::PARAM_STR);
             if(!$stmt->execute()) {
                 array_push($this->errors, $stmt->errorInfo());
                 return false;
@@ -36,10 +37,10 @@
             return true;
         }
 
-        public function is_login_available(PDO $pdo){
+        public function is_login_available(\PDO $pdo){
             $table = Database_connection::TABLENAME;
             $stmt = $pdo->prepare("SELECT userLogin FROM $table WHERE userLogin=:uLogin");
-			$stmt->bindValue(':uLogin', $this->get_login(), PDO::PARAM_STR);
+			$stmt->bindValue(':uLogin', $this->get_login(), \PDO::PARAM_STR);
             if(!$stmt->execute()) {
                 array_push($this->errors, $stmt->errorInfo());
                 return false;

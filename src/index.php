@@ -1,10 +1,11 @@
 <?php
-    require_once('classes/Session_manager.php');
-    require_once('classes/Multilang.php');
-    require_once('classes/Database_connection.php');
-    require_once('classes/Validate.php');
-    require_once('classes/User.php');
-    require_once('classes/Login_session.php');
+    require_once('../vendor/autoload.php');
+    use gustavokre\classes\Session_manager;
+    use gustavokre\classes\MultiLang;
+    use gustavokre\classes\Database_connection;
+    use gustavokre\classes\Validate;
+    use gustavokre\classes\User;
+    use gustavokre\classes\Login_session;
 
     $mLangText = 
     [
@@ -25,7 +26,7 @@
 </head>
 <body>
     <div class="container">
-        <?php include("user_bar.php");?>
+        <?php include "user_bar.php";?>
         <div class="container-child">
             <!-- Login Container -->
             <div class="container-user" id="c-login">

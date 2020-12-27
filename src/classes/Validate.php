@@ -1,4 +1,5 @@
 <?php
+namespace gustavokre\classes;
 
 class Validate{
 

@@ -1,4 +1,6 @@
 <?php 
+    namespace gustavokre\classes;
+
     class Login_session extends User{
 
         private $online = false;

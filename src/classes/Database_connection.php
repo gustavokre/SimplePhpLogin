@@ -1,4 +1,5 @@
 <?php
+    namespace gustavokre\classes;
 
     class Database_connection{
 
@@ -16,7 +17,7 @@
                 $this->start_db($cfg);
                  return;
             }
-            throw new Exception(MultiLang::get_text("DB_NO_VALID_CONFIG"));
+            throw new \Exception(MultiLang::get_text("DB_NO_VALID_CONFIG"));
         }
 
         public function start_db($cfg){
@@ -29,9 +30,9 @@
         public function do_connection($cfg){
             $dsn = "mysql:host=". $cfg['host'] .";dbname=". $cfg['dbname'] .";charset=utf8;";
             try{
-                $this->pdo = new PDO($dsn, $cfg['user'], $cfg['password']);
-            } catch(PDOException $erro){
-                throw new Exception($erro);
+                $this->pdo = new \PDO($dsn, $cfg['user'], $cfg['password']);
+            } catch(\PDOException $erro){
+                throw new \Exception($erro);
             }
         }
 
@@ -40,9 +41,9 @@
         }
 
         public function load_ini_config(){
-            $fullDir = $_SERVER['DOCUMENT_ROOT'] . "/cfg/" . self::INIFILE;
+            $fullDir = $_SERVER['DOCUMENT_ROOT'] . "/src/cfg/" . self::INIFILE;
             if(!file_exists($fullDir)){
-                throw new Exception(sprintf(MultiLang::get_text("DB_FILE_NOT_FOUND"), $fullDir));
+                throw new \Exception(sprintf(MultiLang::get_text("DB_FILE_NOT_FOUND"), $fullDir));
                 return false;
             }
             if($cfg = parse_ini_file(realpath($fullDir))) return $cfg;
@@ -68,8 +69,8 @@
             $stmt = $this->pdo->prepare($sql);
             //you can change these values but caution with validate.php class
             //voce pode alterar esse valores mas cuidado com a classe validate.php
-			$stmt->bindValue(':login', 32, PDO::PARAM_INT);
-			$stmt->bindValue(':name', 96, PDO::PARAM_INT);
+			$stmt->bindValue(':login', 32, \PDO::PARAM_INT);
+			$stmt->bindValue(':name', 96, \PDO::PARAM_INT);
 			if(!$stmt->execute()) {
                 array_push($this->errors, $stmt->errorInfo());
                 return false;

@@ -1,4 +1,6 @@
 <?php
+    namespace gustavokre\classes;
+
     class Login extends User{
         private $online = false;
         private $valid = false;
@@ -21,20 +23,20 @@
             return $this->online;
         }
 
-        public function goOnline(PDO $pdo){
+        public function goOnline(\PDO $pdo){
             if(!$this->valid){
                 return false;
             }
             $table = Database_connection::TABLENAME;
             $stmt = $pdo->prepare("SELECT * FROM $table WHERE userLogin=:userLogin");
-            $stmt->bindValue(':userLogin', $this->get_login(), PDO::PARAM_STR);
+            $stmt->bindValue(':userLogin', $this->get_login(), \PDO::PARAM_STR);
             
             if(!$stmt->execute()) {
                 array_push($this->errors, $stmt->errorInfo());
                 return false;
             }
 
-            while($user = $stmt->fetch(PDO::FETCH_ASSOC)){
+            while($user = $stmt->fetch(\PDO::FETCH_ASSOC)){
                 if($this->verifyPassword($this->password, $user['password_hash'])){
                     $this->set_email($user['email']);
                     $this->set_full_name($user['fullName']);

@@ -1,10 +1,11 @@
 <?php
-    require_once('../classes/Session_manager.php');
-    require_once('../classes/Multilang.php');
-    require_once('../classes/Database_connection.php');
-    require_once('../classes/Validate.php');
-    require_once('../classes/User.php');
-    require_once('../classes/Register.php');
+    require_once('../../vendor/autoload.php');
+    use gustavokre\classes\Session_manager;
+    use gustavokre\classes\MultiLang;
+    use gustavokre\classes\Database_connection;
+    use gustavokre\classes\Validate;
+    use gustavokre\classes\User;
+    use gustavokre\classes\Register;
     
     $dbConnection = new Database_connection();
     
@@ -15,7 +16,7 @@
             echo "Name:" . $userRR->get_full_name() . "<br>";
             echo "Login:" . $userRR->get_login() . "<br>";
             echo "Email:" . $userRR->get_email() . "<br>";
-            echo "<a href=\"/\">Back</a>";
+            echo "<a href=\"../\">Back</a>";
         }
         else
         {
@@ -24,7 +25,7 @@
             echo "Register Class Errors:<br>";
             echo "<pre>" . var_dump($userRR->get_errors()) . "</pre><br>";
             echo "Register failed";
-            echo "<a href=\"/\">Back</a>";
+            echo "<a href=\"../\">Back</a>";
         }
     }
 ?>

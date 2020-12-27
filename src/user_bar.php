@@ -1,5 +1,6 @@
 <div class="user-bar">
     <?php
+    use gustavokre\classes\MultiLang;
     const SESSION_DEBUG = false;
     if($userRR->go_online()){
         echo "<p style='color:#3a3;'>ONLINE!</p>";
