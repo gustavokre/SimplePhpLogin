@@ -19,6 +19,7 @@
         foreach($_SESSION as $key => $val){
             echo "<span>$key : <b>$val</b></span><br>";
         }
+        echo "CURRENT_TIME: " . time();
     }
     ?>
 </div>
