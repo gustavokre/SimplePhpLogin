@@ -6,7 +6,7 @@ class Session_manager{
 	//COOKIE_USER_LIFE life time in minutes
 	const COOKIE_USER_LIFE = 60;
 	//Session life time in minutes (after this time the session will be regenerated)
-	const SESSION_LIFE = 15;
+	const SESSION_LIFE = 1;
 
 	const SALT = "1992";
 	const MAX_ATTEMPTS = 6;
@@ -16,12 +16,17 @@ class Session_manager{
 	public static function start(){
 		//for security reasons
 		ini_set('session.cookie_httponly', 1);
+		ini_set('session.use_only_cookies', 1);
 
 		session_start();
-		setcookie(session_name(),session_id(), time() + (self::COOKIE_USER_LIFE*60));
+		self::set_cookie();
 		if(self::is_expired() && self::is_valid_session()){
 			self::regenerate();
 		}
+	}
+
+	public static function set_cookie(){
+		setcookie(session_name(),session_id(), time() + (self::COOKIE_USER_LIFE*60), "/");
 	}
 
 	public static function get_is_online(){
@@ -40,6 +45,7 @@ class Session_manager{
 	}
 
 	public static function save_login(login $user){
+		if(self::is_destroyed()) self::regenerate();
 		self::register_new_hash();
 		$_SESSION['ONLINE'] = true;
 		$_SESSION['FULLNAME'] = $user->get_full_name();
@@ -56,6 +62,7 @@ class Session_manager{
 	public static function regenerate(){
 		$_SESSION['DESTROYED'] = TRUE;
 		session_regenerate_id();
+		self::set_cookie();
 		unset($_SESSION['DESTROYED']);
 		$_SESSION['EXPIRES'] = time() + (self::SESSION_LIFE*60);
 	}
@@ -65,6 +72,13 @@ class Session_manager{
 	 */
 	public static function is_expired(){
 		if(isset($_SESSION['EXPIRES']) && $_SESSION['EXPIRES'] < time()){
+			return true;
+		}
+		return false;
+	}
+
+	public static function is_destroyed(){
+		if(isset($_SESSION['DESTROYED']) && $_SESSION['DESTROYED']){
 			return true;
 		}
 		return false;
