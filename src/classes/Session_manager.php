@@ -4,14 +4,18 @@ namespace gustavokre\classes;
 class Session_manager{
 
 	//COOKIE_USER_LIFE life time in minutes
-	const COOKIE_USER_LIFE = 60;
-	//Session life time in minutes (after this time the session will be regenerated)
-	const SESSION_LIFE = 1;
+	const COOKIE_USER_LIFE = 1440;
+	//Session regenerate delay in minutes (after this time the session will be regenerated)
+	const SESSION_REGENERATE_DELAY = 15;
+	//Session life time in minutes (after this time the user will be forced to log out)
+	const SESSION_LIFE = 1440;
 
 	const SALT = "1992";
-	const MAX_ATTEMPTS = 6;
+	
 	//reset the attempts after (const value) minutes
 	const ATTEMPTS_SAFE_INTERVAL = 3;
+	//max attempts (if user attempts is equal or higher he will be blocked from login)
+	const MAX_ATTEMPTS = 6;
 
 	public static function start(){
 		//for security reasons
@@ -20,20 +24,18 @@ class Session_manager{
 
 		session_start();
 		self::set_cookie();
-		if(self::is_expired() && self::is_valid_session()){
+
+		if(self::is_life_end()){
+			self::go_offline();
+		}
+
+		if(self::need_regenerate() && self::is_valid_session()){
 			self::regenerate();
 		}
 	}
 
 	public static function set_cookie(){
 		setcookie(session_name(),session_id(), time() + (self::COOKIE_USER_LIFE*60), "/");
-	}
-
-	public static function get_is_online(){
-		if(isset($_SESSION['ONLINE']) && $_SESSION['ONLINE'] === true && self::is_valid_session()){
-			return true;
-		}
-		return false;
 	}
 
 	private static function register_new_hash(){
@@ -51,12 +53,19 @@ class Session_manager{
 		$_SESSION['FULLNAME'] = $user->get_full_name();
 		$_SESSION['EMAIL'] = $user->get_email();
 		$_SESSION['USER'] = $user->get_login();
+		$_SESSION['JOIN_DATE'] = $user->get_join_date();
 		$_SESSION['LOGIN_TIME'] = time();
-		$_SESSION['EXPIRES'] = time() + (self::SESSION_LIFE*60);
+		$_SESSION['EXPIRES'] = time() + (self::SESSION_REGENERATE_DELAY*60);
 		/*i think is important dont change the $_SESSION['ATTEMPTS'] value, for example:
 		if i set to 0, it is possible to user brute force login and when is one attempt left
 		he do a login into a valid account and the attempts will be set to zero and he can try brute force again
 		*/
+	}
+
+	public static function go_offline(){
+		session_unset();
+		session_destroy();
+		session_write_close();
 	}
 
 	public static function regenerate(){
@@ -64,14 +73,28 @@ class Session_manager{
 		session_regenerate_id();
 		self::set_cookie();
 		unset($_SESSION['DESTROYED']);
-		$_SESSION['EXPIRES'] = time() + (self::SESSION_LIFE*60);
+		$_SESSION['EXPIRES'] = time() + (self::SESSION_REGENERATE_DELAY*60);
+	}
+	
+	//check if session needs to be regenerated
+	public static function need_regenerate(){
+		if(isset($_SESSION['EXPIRES']) && $_SESSION['EXPIRES'] < time()){
+			return true;
+		}
+		return false;
 	}
 
-	/**
-	* regenerate session id if expired and user is online
-	 */
-	public static function is_expired(){
-		if(isset($_SESSION['EXPIRES']) && $_SESSION['EXPIRES'] < time()){
+	public static function get_is_online(){
+		if(isset($_SESSION['ONLINE']) && $_SESSION['ONLINE'] === true && self::is_valid_session()){
+			return true;
+		}
+		return false;
+	}
+
+	public static function is_life_end(){
+		if(!isset($_SESSION['LOGIN_TIME'])) return false;
+		$current_life = time() - $_SESSION['LOGIN_TIME'];
+		if($current_life > (self::SESSION_LIFE * 60)){
 			return true;
 		}
 		return false;
@@ -82,12 +105,6 @@ class Session_manager{
 			return true;
 		}
 		return false;
-	}
-
-	public static function go_offline(){
-		session_unset();
-		session_destroy();
-		session_write_close();
 	}
 
 	public static function is_valid_session(){
