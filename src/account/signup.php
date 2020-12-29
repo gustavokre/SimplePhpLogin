@@ -16,16 +16,18 @@
             echo "Name:" . $userRR->get_full_name() . "<br>";
             echo "Login:" . $userRR->get_login() . "<br>";
             echo "Email:" . $userRR->get_email() . "<br>";
+            echo "Join Date:" . $userPP->get_join_date() . "<br>";
             echo "<a href=\"../\">Back</a>";
         }
         else
         {
-            echo "Database Errors:<br>";
-            echo "<pre>" . var_dump($dbConnection->get_errors()) . "</pre><br>";
-            echo "Register Class Errors:<br>";
-            echo "<pre>" . var_dump($userRR->get_errors()) . "</pre><br>";
-            echo "Register failed";
-            echo "<a href=\"../\">Back</a>";
+            if(isset($userPP->get_errors()[0]))
+                $_SESSION["ERRORS"] = $userPP->get_errors()[0];
+            else
+                $_SESSION["ERRORS"] = "Erro inesperado";
+
+            header("Location:../index.php?error=true");
+            exit();
         }
     }
 ?>

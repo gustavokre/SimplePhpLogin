@@ -22,14 +22,13 @@
         }
         else
         {
-            echo "Database Errors:<br>";
-            echo "<pre>" . var_dump($dbConnection->get_errors()) . "</pre><br>";
-            echo "Login Class Errors:<br>";
-            echo "<pre>" . var_dump($userPP->get_errors()) . "</pre><br>";
-            echo "Login failed<br>";
-            echo "<a href=\"/\">Back</a>";
-            $_SESSION["ERRORS"] = $userPP->get_errors()[0];
+            if(isset($userPP->get_errors()[0]))
+                $_SESSION["ERRORS"] = $userPP->get_errors()[0];
+            else
+                $_SESSION["ERRORS"] = "Erro inesperado";
+
             header("Location:../index.php?error=true");
+            exit();
         }
     }
 ?>
