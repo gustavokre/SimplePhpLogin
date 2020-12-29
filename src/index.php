@@ -64,6 +64,7 @@
     <script src="js/containerSwitch.js"></script>
     <?php if(isset($_GET["error"])){
         echo "<script type='text/javascript'>alert(\"". trim($_SESSION["ERRORS"]) ."\");</script>";
+        unset($_SESSION["ERRORS"]);
      } ?>
 </body>
 </html>
