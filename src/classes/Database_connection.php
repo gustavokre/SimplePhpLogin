@@ -40,9 +40,23 @@
             return $this->pdo;
         }
 
+        public function get_full_directory(){
+            $fullDir = [ 
+                realpath("../" . "/cfg/" . self::INIFILE),
+                $_SERVER['DOCUMENT_ROOT'] . "/cfg/" . self::INIFILE,
+                $_SERVER['DOCUMENT_ROOT'] . "/src/cfg/" . self::INIFILE
+            ];
+            foreach($fullDir as $val){
+                if(file_exists($val)){
+                    return $val;
+                }
+            }
+            return false;
+        }
+
         public function load_ini_config(){
-            $fullDir = $_SERVER['DOCUMENT_ROOT'] . "/src/cfg/" . self::INIFILE;
-            if(!file_exists($fullDir)){
+            $fullDir = $this->get_full_directory();
+            if(!$fullDir){
                 throw new \Exception(sprintf(MultiLang::get_text("DB_FILE_NOT_FOUND"), $fullDir));
                 return false;
             }
