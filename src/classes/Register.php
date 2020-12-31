@@ -11,6 +11,7 @@
                 $this->set_password_hash($this->generate_password_hash($password));
                 $this->set_email($email);
                 $this->set_full_name($name);
+                $this->set_join_date(date("Y-m-d"));
                 $this->valid = true;
             }
             else
