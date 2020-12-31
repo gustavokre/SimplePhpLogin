@@ -22,7 +22,7 @@
         }
 
         public function register(\PDO $pdo){
-            if(!$this->valid || !$this->is_login_available($pdo)){
+            if(!$this->valid || !$this->is_login_email_available($pdo)){
                 return false;
             }
             $table = Database_connection::TABLENAME;
@@ -38,16 +38,22 @@
             return true;
         }
 
-        public function is_login_available(\PDO $pdo){
+        public function is_login_email_available(\PDO $pdo){
             $table = Database_connection::TABLENAME;
-            $stmt = $pdo->prepare("SELECT userLogin FROM $table WHERE userLogin=:uLogin");
-			$stmt->bindValue(':uLogin', $this->get_login(), \PDO::PARAM_STR);
+            $stmt = $pdo->prepare("SELECT userLogin FROM $table WHERE userLogin=:uLogin OR email=:uEmail");
+            $stmt->bindValue(':uLogin', $this->get_login(), \PDO::PARAM_STR);
+            $stmt->bindValue(':uEmail', $this->get_email(), \PDO::PARAM_STR);
             if(!$stmt->execute()) {
                 array_push($this->errors, $stmt->errorInfo());
                 return false;
             }
             if($stmt->rowCount() > 0){
-                array_push($this->errors, MultiLang::get_text("REGISTER_USER_ALREADY_EXIST"));
+                $user = $stmt->fetch(\PDO::FETCH_ASSOC);
+                if($user['userLogin'] == $this->get_login())
+                    array_push($this->errors, MultiLang::get_text("REGISTER_USER_ALREADY_EXIST"));
+                else
+                    array_push($this->errors, MultiLang::get_text("REGISTER_EMAIL_ALREADY_EXIST"));
+                    
                 return false;
             }
             return true;
