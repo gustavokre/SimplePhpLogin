@@ -14,7 +14,7 @@
     ];
 
     Session_manager::start();
-    $userRR = new Login_session();
+    $userL = new Login_session();
 
 ?>
 <!DOCTYPE html>
