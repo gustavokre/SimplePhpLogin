@@ -11,21 +11,21 @@
     Session_manager::start();
     
     if(isset($_POST['login']) && isset($_POST['password'])){
-        $userPP = new Login($_POST['login'], $_POST['password']);
-        if($userPP->goOnline($dbConnection->get_connection())){
-            echo "Login successfully!<br>";
-            echo "Name:" . $userPP->get_full_name() . "<br>";
-            echo "Login:" . $userPP->get_login() . "<br>";
-            echo "Email:" . $userPP->get_email() . "<br>";
-            echo "Join Date:" . $userPP->get_join_date() . "<br>";
-            echo "<a href=\"../\">Back</a>";
+        $userL = new Login($_POST['login'], $_POST['password']);
+        if($userL->goOnline($dbConnection->get_connection())){
+            echo MultiLang::get_text("LOGIN_DONE") . "<br>";
+            echo MultiLang::get_text("SHOW_FULL_NAME") . ": " . $userL->get_full_name() . "<br>";
+            echo MultiLang::get_text("SHOW_USER_NAME") . ": " . $userL->get_login() . "<br>";
+            echo MultiLang::get_text("SHOW_EMAIL") . ": " . $userL->get_email() . "<br>";
+            echo MultiLang::get_text("SHOW_JOIN_DATE") . ": " . $userL->get_join_date() . "<br>";
+            echo "<a href=\"../\">" . MultiLang::get_text("BACK") . "</a>";
         }
         else
         {
-            if(isset($userPP->get_errors()[0]))
-                $_SESSION["ERRORS"] = $userPP->get_errors()[0];
+            if(isset($userL->get_errors()[0]))
+                $_SESSION["ERRORS"] = $userL->get_errors()[0];
             else
-                $_SESSION["ERRORS"] = "Erro inesperado";
+                $_SESSION["ERRORS"] = MultiLang::get_text("ERROR_UNEXPECTED");
 
             header("Location:../index.php?error=true");
             exit();
