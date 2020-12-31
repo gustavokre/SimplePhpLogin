@@ -2,11 +2,12 @@
     <?php
     use gustavokre\classes\MultiLang;
     const SESSION_DEBUG = false;
-    if($userRR->go_online()){
+    if($userL->go_online()){
         echo "<p style='color:#3a3;'>ONLINE!</p>";
-        echo "<span>" . MultiLang::get_text("SHOW_USER_NAME") . ": <b>" . $userRR->get_login() . "</b></span><br>";
-        echo "<span>" . MultiLang::get_text("SHOW_FULL_NAME") . ": <b>" . $userRR->get_full_name() . "</b></span><br>";
-        echo "<span>" . MultiLang::get_text("SHOW_EMAIL") . ": <b>" . $userRR->get_email() . "</b></span><br>";
+        echo "<span>" . MultiLang::get_text("SHOW_USER_NAME") . ": <b>" . $userL->get_login() . "</b></span><br>";
+        echo "<span>" . MultiLang::get_text("SHOW_FULL_NAME") . ": <b>" . $userL->get_full_name() . "</b></span><br>";
+        echo "<span>" . MultiLang::get_text("SHOW_EMAIL") . ": <b>" . $userL->get_email() . "</b></span><br>";
+        echo "<span>" . MultiLang::get_text("SHOW_JOIN_DATE") . ": <b>" . $userL->get_join_date() . "</b></span><br>";
         echo "<a href='account/logout.php'>". MultiLang::get_text("LOGOUT_BUTTON") ."</a>";
     }
     else
