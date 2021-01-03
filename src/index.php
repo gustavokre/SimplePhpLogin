@@ -62,7 +62,7 @@
     </div>
     <script src="js/helpField.js"></script>
     <script src="js/containerSwitch.js"></script>
-    <?php if(isset($_GET["error"])){
+    <?php if(isset($_GET["error"]) && isset($_SESSION["ERRORS"])){
         echo "<script type='text/javascript'>alert(\"". trim($_SESSION["ERRORS"]) ."\");</script>";
         unset($_SESSION["ERRORS"]);
      } ?>
