@@ -5,6 +5,7 @@
         private $online = false;
         private $valid = false;
         private $password;
+        private $pdo;
         
         public function __construct($login, $password)
         {
@@ -12,6 +13,7 @@
                 $this->set_login($login);
                 $this->password = $password;
                 $this->valid = true;
+                $this->pdo = Database_connection::get_connection();
             }
             else
             {
@@ -23,12 +25,12 @@
             return $this->online;
         }
 
-        public function goOnline(\PDO $pdo){
+        public function goOnline(){
             if(!$this->valid){
                 return false;
             }
             $table = Database_connection::TABLENAME;
-            $stmt = $pdo->prepare("SELECT * FROM $table WHERE userLogin=:userLogin");
+            $stmt = $this->pdo->prepare("SELECT * FROM $table WHERE userLogin=:userLogin");
             $stmt->bindValue(':userLogin', $this->get_login(), \PDO::PARAM_STR);
             
             if(!$stmt->execute()) {

@@ -60,7 +60,7 @@
             $this->passwordHash = $hash;
         }
 
-        public function generate_password_hash($password){
+        public static function generate_password_hash($password){
             return password_hash($password, PASSWORD_BCRYPT); 
         }
 

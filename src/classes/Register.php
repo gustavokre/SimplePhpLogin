@@ -3,10 +3,12 @@
 
     class Register extends User{
         private $valid;
+        private $pdo;
 
         public function __construct($login, $password, $email, $name)
         {
             if(Validate::generic($login, 'login') && Validate::generic($password, 'password') && Validate::email($email) && Validate::generic($name, 'name')){
+                $this->pdo = Database_connection::get_connection();
                 $this->set_login($login);
                 $this->set_password_hash($this->generate_password_hash($password));
                 $this->set_email($email);
@@ -21,12 +23,12 @@
             }
         }
 
-        public function register(\PDO $pdo){
-            if(!$this->valid || !$this->is_login_email_available($pdo)){
+        public function register(){
+            if(!$this->valid || !$this->is_login_email_available($this->pdo)){
                 return false;
             }
             $table = Database_connection::TABLENAME;
-            $stmt = $pdo->prepare("INSERT INTO $table (userLogin, password_hash, email, fullName, joinDate) VALUES(:userLogin,:passwordHash,:email,:fullName, CURRENT_DATE())");
+            $stmt = $this->pdo->prepare("INSERT INTO $table (userLogin, password_hash, email, fullName, joinDate) VALUES(:userLogin,:passwordHash,:email,:fullName, CURRENT_DATE())");
 			$stmt->bindValue(':userLogin', $this->get_login(), \PDO::PARAM_STR);
             $stmt->bindValue(':passwordHash', $this->get_password_hash(), \PDO::PARAM_STR);
             $stmt->bindValue(':email', $this->get_email(), \PDO::PARAM_STR);
@@ -38,9 +40,9 @@
             return true;
         }
 
-        public function is_login_email_available(\PDO $pdo){
+        public function is_login_email_available(){
             $table = Database_connection::TABLENAME;
-            $stmt = $pdo->prepare("SELECT userLogin FROM $table WHERE userLogin=:uLogin OR email=:uEmail");
+            $stmt = $this->pdo->prepare("SELECT userLogin FROM $table WHERE userLogin=:uLogin OR email=:uEmail");
             $stmt->bindValue(':uLogin', $this->get_login(), \PDO::PARAM_STR);
             $stmt->bindValue(':uEmail', $this->get_email(), \PDO::PARAM_STR);
             if(!$stmt->execute()) {

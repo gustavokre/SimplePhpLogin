@@ -4,9 +4,18 @@
     class Database_connection{
 
         const TABLENAME = "user";
+        const TABLENAME_RECOVER = "recover";
         const INIFILE = 'database.ini';
+        static protected $instance;
         private $pdo;
         private $errors = [];
+
+        public static function create_instance() {
+            if(!self::$instance) {
+                self::$instance = new self();
+            }
+            return self::$instance;
+        }
 
         public function __construct($cfg = false){
             if($cfg){
@@ -24,6 +33,7 @@
             $this->do_connection($cfg);
             if($cfg['createTable'] == 1){
                 $this->create_table();
+                $this->create_table_recover();
             }
         }
 
@@ -36,8 +46,9 @@
             }
         }
 
-        public function get_connection(){
-            return $this->pdo;
+        public static function get_connection(){
+            self::create_instance();
+            return self::$instance->pdo;
         }
 
         public function get_full_directory(){
@@ -85,6 +96,25 @@
             //voce pode alterar esse valores mas cuidado com a classe validate.php
 			$stmt->bindValue(':login', 32, \PDO::PARAM_INT);
 			$stmt->bindValue(':name', 96, \PDO::PARAM_INT);
+			if(!$stmt->execute()) {
+                array_push($this->errors, $stmt->errorInfo());
+                return false;
+            }
+            return true;
+        }
+
+        public function create_table_recover(){
+            $table = self::TABLENAME_RECOVER; 
+            $sql = "CREATE TABLE IF NOT EXISTS $table (
+                userLogin varchar(:login) PRIMARY KEY NOT NULL,
+                email varchar(254) NOT NULL,
+                token varchar(254) NOT NULL,
+                expires TIMESTAMP NOT NULL
+                );";
+            $stmt = $this->pdo->prepare($sql);
+            //you can change these values but caution with validate.php class
+            //voce pode alterar esse valores mas cuidado com a classe validate.php
+			$stmt->bindValue(':login', 32, \PDO::PARAM_INT);
 			if(!$stmt->execute()) {
                 array_push($this->errors, $stmt->errorInfo());
                 return false;
