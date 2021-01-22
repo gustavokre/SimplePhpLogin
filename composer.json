@@ -5,5 +5,8 @@
         }
     },
     "name": "gustavokre/web-page-php-login",
-    "description": "Sistema de login simples em php"
+    "description": "Sistema de login simples em php",
+    "require": {
+        "phpmailer/phpmailer": "^6.2"
+    }
 }
