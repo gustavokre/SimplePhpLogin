@@ -1,0 +1,12 @@
+{
+    "autoload": {
+        "psr-4":{
+            "gustavokre\\" : "src/"
+        }
+    },
+    "name": "gustavokre/web-page-php-login",
+    "description": "Sistema de login simples em php",
+    "require": {
+        "phpmailer/phpmailer": "^6.2"
+    }
+}

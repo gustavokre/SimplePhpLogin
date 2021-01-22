@@ -1,4 +1,6 @@
 <?php 
+    namespace gustavokre\classes;
+
     class Login_session extends User{
 
         private $online = false;
@@ -12,6 +14,7 @@
                 $this->set_full_name($_SESSION['FULLNAME']);
                 $this->set_email($_SESSION['EMAIL']);
                 $this->set_login($_SESSION['USER']);
+                $this->set_join_date($_SESSION['JOIN_DATE']);
                 $this->online = true;
                 return true;
             }

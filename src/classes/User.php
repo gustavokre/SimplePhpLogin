@@ -1,4 +1,5 @@
 <?php
+    namespace gustavokre\classes;
 
     abstract class User{
         protected $errors = [];
@@ -7,6 +8,7 @@
         private $firstName;
         private $fullName;
         private $email;
+        private $joinDate;
 
         public function get_errors(){
             return $this->errors;
@@ -32,6 +34,10 @@
             return $this->firstName;
         }
 
+        public function get_join_date(){
+            return $this->joinDate;
+        }
+
         public function set_first_name($firstName){
             $this->firstName = $firstName;
         }
@@ -46,11 +52,15 @@
             $this->login = $login;
         }
 
+        public function set_join_date($date){
+            $this->joinDate = $date;
+        }
+
         public function set_password_hash($hash){
             $this->passwordHash = $hash;
         }
 
-        public function generate_password_hash($password){
+        public static function generate_password_hash($password){
             return password_hash($password, PASSWORD_BCRYPT); 
         }
 
