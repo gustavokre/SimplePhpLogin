@@ -21,7 +21,7 @@
             }
         }
 
-        public function get_is_onlinene(){
+        public function get_is_online(){
             return $this->online;
         }
 
@@ -58,7 +58,7 @@
             return password_verify($password, $dbPassword);
         }
 
-        public function go_offlinee(){
+        public function go_offline(){
             $this->unset_all();
             $this->valid = false;
             $this->online = false;
